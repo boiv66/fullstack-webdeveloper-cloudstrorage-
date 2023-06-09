@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.util.List;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -383,9 +385,10 @@ class CloudStorageApplicationTests {
 
 	@Test
 	public void editCredential(){
-		doMockSignUp("URL","Test","UT","123");
-		doLogIn("UT", "123");
+		testCreateCredential();
 		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+
+
 
 		// click on edit button
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("editCredentialBtn")));
